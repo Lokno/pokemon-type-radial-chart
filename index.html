@@ -79,6 +79,36 @@
         return ae*be;
     }
 
+    function drawArrowHead(x1,y1, x2, y2, color, scale ) {
+    	const angle = Math.atan2(y1 - y2, x1 - x2);
+
+        // Length and width of the arrowhead triangle
+        const arrowLength = 10*scale;
+        const arrowWidth = 5*scale;
+
+        const midX = (parseInt(x1) + parseInt(x2)) / 2;
+        const midY = (parseInt(y1) + parseInt(y2)) / 2;
+    
+        // Calculate the points of the triangle
+        const arrowPoint1 = {
+            x: midX - arrowLength * Math.cos(angle - Math.PI / 6),
+            y: midY - arrowLength * Math.sin(angle - Math.PI / 6)
+        };
+        const arrowPoint2 = {
+            x: midX - arrowLength * Math.cos(angle + Math.PI / 6),
+            y: midY - arrowLength * Math.sin(angle + Math.PI / 6)
+        };
+
+        const arrowHead = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+        const points = `${midX},${midY} ${arrowPoint1.x},${arrowPoint1.y} ${arrowPoint2.x},${arrowPoint2.y}`;
+        arrowHead.setAttribute("points", points);
+        arrowHead.setAttribute("fill", color);
+
+        lines.push(arrowHead)
+
+        svghead.insertBefore(arrowHead, svghead.firstChild );
+    }
+
     function drawAlignedCross(x1, y1, x2, y2, crossSize, crossColor) {
         // Calculate the midpoint
         const midX = (parseInt(x1) + parseInt(x2)) / 2;
@@ -141,31 +171,43 @@
         tempNode.setAttribute("y2", by);
 
         var thickness = 6
+        var col = "black"
+        var scale = 2.5
 
         tempNode.setAttribute("stroke-opacity", '1.0');
         if( t == 4.0 ) {
-            tempNode.setAttribute("stroke", 'lightgreen');
+            col = 'lightgreen'
             tempNode.removeAttribute("stroke-dasharray");
             thickness *= 2
+            scale *= 2
         }
         else if( t == 2.0 ) {
+        	col = 'darkgreen'
             tempNode.setAttribute("stroke", 'darkgreen');
             tempNode.removeAttribute("stroke-dasharray");
         }
         else if( t == 0.0 ) {
+        	col = 'grey'
             tempNode.setAttribute("stroke", 'grey');
             tempNode.removeAttribute("stroke-dasharray");
             drawAlignedCross(ax,ay,bx,by,20,'grey',thickness)
         }   
         else if( t == 0.5 ) {
+        	col = 'darkred'
             tempNode.setAttribute("stroke", 'darkred');
             tempNode.setAttribute("stroke-dasharray", '16 4');
         }           
         else { // t == 0.25
+        	col = '#F27572'
             tempNode.setAttribute("stroke", '#F27572');
             tempNode.setAttribute("stroke-dasharray", '16 4');
             thickness *= 0.5
+            scale *= 0.75
         }
+
+        tempNode.setAttribute("stroke", col);
+
+        if( t != 0 ) drawArrowHead(ax,ay,bx,by,col,scale)
 
         tempNode.setAttribute("stroke-width", thickness);
 
