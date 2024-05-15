@@ -56,8 +56,6 @@
         svghead = document.getElementById('svgbody');
 
         center_circle = document.getElementById('DEFENDING')
-
-        document.getElementById("SECONDARY").setAttribute("d", describeArc(parseFloat(center_circle.getAttribute('cx')), parseFloat(center_circle.getAttribute('cy')), 40, 0, 180));
     }
 
     function get_effectiveness( move_type_idx, aidx, bidx )
@@ -160,8 +158,8 @@
         var currtype = target.getAttribute('id');
         var idx = 0;
 
-        center_circle    = document.getElementById('DEFENDING');
-        center_secondary = document.getElementById("SECONDARY");
+        center_circle_left    = document.getElementById('DEFENDING_LEFT');
+        center_circle_right    = document.getElementById('DEFENDING_RIGHT');
 
         for(; idx < 18; idx++) {
             if( typenames[idx] == currtype ) {
@@ -175,21 +173,13 @@
 
         if( curr_type == 0 )
         {
-            center_circle.setAttribute("fill",target.getAttribute('fill'))
-            center_secondary.setAttribute("fill",target.getAttribute('fill'))
-
-            center_circle.firstElementChild.innerHTML    = target.firstElementChild.innerHTML;
-            center_secondary.firstElementChild.innerHTML = target.firstElementChild.innerHTML;
-
+            center_circle_left.setAttribute("href",target.getAttribute('href'))
+            center_circle_right.setAttribute("href",target.getAttribute('href'))
             target_types[0] = idx;
         }
         else
         {
-            center_secondary.setAttribute("fill",target.getAttribute('fill'))
-
-            center_circle.firstElementChild.innerHTML += '/' + target.firstElementChild.innerHTML;
-            center_secondary.firstElementChild.innerHTML = center_circle.firstElementChild.innerHTML;
-
+            center_circle_right.setAttribute("href",target.getAttribute('href'))
             target_types[1] = idx;
         }
 
@@ -216,6 +206,14 @@
 
 <svg id="svgbody" width="868px" height="900px" viewBox="60.5 -18.5 868 900" enable-background="new 60.5 -18.5 868 804">
 
+<clipPath id="clip-rect-left">
+  <rect x="420" y="336" width="64" height="128" />
+</clipPath>
+
+<clipPath id="clip-rect-right">
+  <rect x="484" y="336" width="64" height="128" />
+</clipPath>
+
 <rect x="100" y="-15" width="20" height="20" fill="lightgreen"></rect>
 <rect x="100" y="15" width="20" height="20" fill="darkgreen"></rect>
 <rect x="100" y="45" width="20" height="20" fill="red"></rect>
@@ -233,48 +231,29 @@
 
 <line id="template" stroke-opacity="0.0" x1="0" y1="0" x2="100" y2="100" stroke="blue" stroke-width="4"></line>
 
-<!--
-<circle id="FLYING"   onclick="showedges(evt)" fill="#A890F0" cx="377.632" cy="692.244" r="32" style="cursor:pointer;"><title>Flying</title></circle>
-<circle id="GROUND"   onclick="showedges(evt)" fill="#E0C068" cx="284.093" cy="638.240" r="32" style="cursor:pointer;"><title>Ground</title></circle>
-<circle id="POISON"   onclick="showedges(evt)" fill="#A040A0" cx="214.666" cy="555.500" r="32" style="cursor:pointer;"><title>Poison</title></circle>
-<circle id="FIGHTING" onclick="showedges(evt)" fill="#C03028" cx="177.725" cy="454.005" r="32" style="cursor:pointer;"><title>Fighting</title></circle>
-<circle id="ICE"      onclick="showedges(evt)" fill="#98D8D8" cx="177.725" cy="345.995" r="32" style="cursor:pointer;"><title>Ice</title></circle>
-<circle id="GRASS"    onclick="showedges(evt)" fill="#78C850" cx="214.666" cy="244.500" r="32" style="cursor:pointer;"><title>Grass</title></circle>
-<circle id="ELECTRIC" onclick="showedges(evt)" fill="#F8D030" cx="284.093" cy="161.760" r="32" style="cursor:pointer;"><title>Electric</title></circle>
-<circle id="WATER"    onclick="showedges(evt)" fill="#6890F0" cx="377.632" cy="107.756" r="32" style="cursor:pointer;"><title>Water</title></circle>
-<circle id="FIRE"     onclick="showedges(evt)" fill="#F08030" cx="484.000" cy="89.000"  r="32" style="cursor:pointer;"><title>Fire</title></circle>
-<circle id="NORMAL"   onclick="showedges(evt)" fill="#A8A878" cx="590.368" cy="107.756" r="32" style="cursor:pointer;"><title>Normal</title></circle>
-<circle id="STEEL"    onclick="showedges(evt)" fill="#B8B8D0" cx="683.907" cy="161.760" r="32" style="cursor:pointer;"><title>Steel</title></circle>
-<circle id="DARK"     onclick="showedges(evt)" fill="#705848" cx="753.334" cy="244.500" r="32" style="cursor:pointer;"><title>Dark</title></circle>
-<circle id="DRAGON"   onclick="showedges(evt)" fill="#7038F8" cx="790.275" cy="345.995" r="32" style="cursor:pointer;"><title>Dragon</title></circle>
-<circle id="GHOST"    onclick="showedges(evt)" fill="#705898" cx="790.275" cy="454.005" r="32" style="cursor:pointer;"><title>Ghost</title></circle>
-<circle id="ROCK"     onclick="showedges(evt)" fill="#B8A038" cx="753.334" cy="555.500" r="32" style="cursor:pointer;"><title>Rock</title></circle>
-<circle id="BUG"      onclick="showedges(evt)" fill="#A8B820" cx="683.907" cy="638.240" r="32" style="cursor:pointer;"><title>Bug</title></circle>
-<circle id="PSYCHIC"  onclick="showedges(evt)" fill="#F85888" cx="590.368" cy="692.244" r="32" style="cursor:pointer;"><title>Psychic</title></circle>
-<circle id="FAIRY"    onclick="showedges(evt)" fill="#EE99AC" cx="484.000" cy="711.000" r="32" style="cursor:pointer;"><title>Fairy</title></circle> -->
+<image id="FLYING"   onclick="showedges(evt)" fill="#8fa8dd" href="images/Flying_icon_SwSh.png"   x="345.632" y="660.244" width="64" height="64" style="cursor:pointer;"><title>Flying</title></image>
+<image id="GROUND"   onclick="showedges(evt)" fill="#d97746" href="images/Ground_icon_SwSh.png"   x="252.093" y="606.24"  width="64" height="64" style="cursor:pointer;"><title>Ground</title></image>
+<image id="POISON"   onclick="showedges(evt)" fill="#ab6ac8" href="images/Poison_icon_SwSh.png"   x="182.666" y="523.5"   width="64" height="64" style="cursor:pointer;"><title>Poison</title></image>
+<image id="FIGHTING" onclick="showedges(evt)" fill="#ce4069" href="images/Fighting_icon_SwSh.png" x="145.725" y="422.005" width="64" height="64" style="cursor:pointer;"><title>Fighting</title></image>
+<image id="ICE"      onclick="showedges(evt)" fill="#74cec0" href="images/Ice_icon_SwSh.png"      x="145.725" y="313.995" width="64" height="64" style="cursor:pointer;"><title>Ice</title></image>
+<image id="GRASS"    onclick="showedges(evt)" fill="#63bb5b" href="images/Grass_icon_SwSh.png"    x="182.666" y="212.5"   width="64" height="64" style="cursor:pointer;"><title>Grass</title></image>
+<image id="ELECTRIC" onclick="showedges(evt)" fill="#f3d23b" href="images/Electric_icon_SwSh.png" x="252.093" y="129.76"  width="64" height="64" style="cursor:pointer;"><title>Electric</title></image>
+<image id="WATER"    onclick="showedges(evt)" fill="#4d90d5" href="images/Water_icon_SwSh.png"    x="345.632" y="75.756"  width="64" height="64" style="cursor:pointer;"><title>Water</title></image>
+<image id="FIRE"     onclick="showedges(evt)" fill="#ff9c54" href="images/Fire_icon_SwSh.png"     x="452.0" y="57.0"      width="64" height="64" style="cursor:pointer;"><title>Fire</title></image>
+<image id="NORMAL"   onclick="showedges(evt)" fill="#9099a1" href="images/Normal_icon_SwSh.png"   x="558.368" y="75.756"  width="64" height="64" style="cursor:pointer;"><title>Normal</title></image>
+<image id="STEEL"    onclick="showedges(evt)" fill="#5a8ea1" href="images/Steel_icon_SwSh.png"    x="651.907" y="129.76"  width="64" height="64" style="cursor:pointer;"><title>Steel</title></image>
+<image id="DARK"     onclick="showedges(evt)" fill="#5a5366" href="images/Dark_icon_SwSh.png"     x="721.334" y="212.5"   width="64" height="64" style="cursor:pointer;"><title>Dark</title></image>
+<image id="DRAGON"   onclick="showedges(evt)" fill="#0a6dc4" href="images/Dragon_icon_SwSh.png"   x="758.275" y="313.995" width="64" height="64" style="cursor:pointer;"><title>Dragon</title></image>
+<image id="GHOST"    onclick="showedges(evt)" fill="#5269ac" href="images/Ghost_icon_SwSh.png"    x="758.275" y="422.005" width="64" height="64" style="cursor:pointer;"><title>Ghost</title></image>
+<image id="ROCK"     onclick="showedges(evt)" fill="#c7b78b" href="images/Rock_icon_SwSh.png"     x="721.334" y="523.5"   width="64" height="64" style="cursor:pointer;"><title>Rock</title></image>
+<image id="BUG"      onclick="showedges(evt)" fill="#90c12c" href="images/Bug_icon_SwSh.png"      x="651.907" y="606.24"  width="64" height="64" style="cursor:pointer;"><title>Bug</title></image>
+<image id="PSYCHIC"  onclick="showedges(evt)" fill="#f97176" href="images/Psychic_icon_SwSh.png"  x="558.368" y="660.244" width="64" height="64" style="cursor:pointer;"><title>Psychic</title></image>
+<image id="FAIRY"    onclick="showedges(evt)" fill="#ec8fe6" href="images/Fairy_icon_SwSh.png"    x="452.0" y="679.0"     width="64" height="64" style="cursor:pointer;"><title>Fairy</title></image> -->
 
-<image id="FLYING"   onclick="showedges(evt)" fill="#8fa8dd" href="images/Flying_icon_SwSh.png" x="361.632", y="676.244" width="64" height="64" style="cursor:pointer;"><title>Flying</title></image>
-<image id="GROUND"   onclick="showedges(evt)" fill="#d97746" href="images/Ground_icon_SwSh.png" x="268.093", y="622.24"  width="64" height="64" style="cursor:pointer;"><title>Ground</title></image>
-<image id="POISON"   onclick="showedges(evt)" fill="#ab6ac8" href="images/Poison_icon_SwSh.png" x="198.666", y="539.5"   width="64" height="64" style="cursor:pointer;"><title>Poison</title></image>
-<image id="FIGHTING" onclick="showedges(evt)" fill="#ce4069" href="images/Fighting_icon_SwSh.png" x="161.725", y="438.005" width="64" height="64" style="cursor:pointer;"><title>Fighting</title></image>
-<image id="ICE"      onclick="showedges(evt)" fill="#74cec0" href="images/Ice_icon_SwSh.png" x="161.725", y="329.995" width="64" height="64" style="cursor:pointer;"><title>Ice</title></image>
-<image id="GRASS"    onclick="showedges(evt)" fill="#63bb5b" href="images/Grass_icon_SwSh.png" x="198.666", y="228.5"   width="64" height="64" style="cursor:pointer;"><title>Grass</title></image>
-<image id="ELECTRIC" onclick="showedges(evt)" fill="#f3d23b" href="images/Electric_icon_SwSh.png" x="268.093", y="145.76"  width="64" height="64" style="cursor:pointer;"><title>Electric</title></image>
-<image id="WATER"    onclick="showedges(evt)" fill="#4d90d5" href="images/Water_icon_SwSh.png" x="361.632", y="91.756"  width="64" height="64" style="cursor:pointer;"><title>Water</title></image>
-<image id="FIRE"     onclick="showedges(evt)" fill="#ff9c54" href="images/Fire_icon_SwSh.png" x="468.0",   y="73.0"    width="64" height="64" style="cursor:pointer;"><title>Fire</title></image>
-<image id="NORMAL"   onclick="showedges(evt)" fill="#9099a1" href="images/Normal_icon_SwSh.png" x="574.368", y="91.756"  width="64" height="64" style="cursor:pointer;"><title>Normal</title></image>
-<image id="STEEL"    onclick="showedges(evt)" fill="#5a8ea1" href="images/Steel_icon_SwSh.png" x="667.907", y="145.76"  width="64" height="64" style="cursor:pointer;"><title>Steel</title></image>
-<image id="DARK"     onclick="showedges(evt)" fill="#5a5366" href="images/Dark_icon_SwSh.png" x="737.334", y="228.5"   width="64" height="64" style="cursor:pointer;"><title>Dark</title></image>
-<image id="DRAGON"   onclick="showedges(evt)" fill="#0a6dc4" href="images/Dragon_icon_SwSh.png" x="774.275", y="329.995" width="64" height="64" style="cursor:pointer;"><title>Dragon</title></image>
-<image id="GHOST"    onclick="showedges(evt)" fill="#5269ac" href="images/Ghost_icon_SwSh.png" x="774.275", y="438.005" width="64" height="64" style="cursor:pointer;"><title>Ghost</title></image>
-<image id="ROCK"     onclick="showedges(evt)" fill="#c7b78b" href="images/Rock_icon_SwSh.png" x="737.334", y="539.5"   width="64" height="64" style="cursor:pointer;"><title>Rock</title></image>
-<image id="BUG"      onclick="showedges(evt)" fill="#90c12c" href="images/Bug_icon_SwSh.png" x="667.907", y="622.24"  width="64" height="64" style="cursor:pointer;"><title>Bug</title></image>
-<image id="PSYCHIC"  onclick="showedges(evt)" fill="#f97176" href="images/Psychic_icon_SwSh.png" x="574.368", y="676.244" width="64" height="64" style="cursor:pointer;"><title>Psychic</title></image>
-<image id="FAIRY"    onclick="showedges(evt)" fill="#ec8fe6" href="images/Fairy_icon_SwSh.png" x="468.0",   y="695.0"   width="64" height="64" style="cursor:pointer;"><title>Fairy</title></image> -->
+<circle id="DEFENDING" fill="#000" cx="484.000" cy="400.000" r="64"><title></title></circle>
 
-<circle id="DEFENDING" fill="#000" cx="484.000" cy="400.000" r="40"><title></title></circle>
-
-<path id="SECONDARY" d=""><title></title></path>
+<image id="DEFENDING_LEFT" href="" x="420.000" y="336.000" width="128" clip-path="url(#clip-rect-left)"/>
+<image id="DEFENDING_RIGHT" href="" x="420.000" y="336.000" width="128" clip-path="url(#clip-rect-right)"/>
 
 </svg>
 
