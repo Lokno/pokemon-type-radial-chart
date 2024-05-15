@@ -81,25 +81,26 @@
         return ae*be;
     }
 
-    function createLine(a,b,t) {
+    function createLine(a,b,t,r) {
         var ax = a.getAttribute('cx');
         var ay = a.getAttribute('cy');
-        var bx = b.getAttribute('cx');
-        var by = b.getAttribute('cy');
+        var bx = parseInt(b.getAttribute('x'))+r;
+        var by = parseInt(b.getAttribute('y'))+r;
 
         var TemplateNode = document.getElementById('template');
         tempNode = TemplateNode.cloneNode();
 
-        //var tempNode = document.NS("http://www.w3.org/2000/svg", "line");
         tempNode.setAttribute("x1", ax);
         tempNode.setAttribute("y1", ay);
         tempNode.setAttribute("x2", bx);
         tempNode.setAttribute("y2", by);
-        tempNode.setAttribute("stroke-width", 6);
+
+        var thickness = 6
 
         tempNode.setAttribute("stroke-opacity", '1.0');
         if( t == 4.0 ) {
             tempNode.setAttribute("stroke", 'lightgreen');
+            thickness *= 2
         }
         else if( t == 2.0 ) {
             tempNode.setAttribute("stroke", 'darkgreen');
@@ -112,7 +113,10 @@
         }           
         else { // t == 0.25
             tempNode.setAttribute("stroke", 'darkred');
+            thickness *= 0.5
         }
+
+        tempNode.setAttribute("stroke-width", thickness);
 
         lines.push(tempNode);
         svghead.insertBefore(tempNode, svghead.firstChild );
@@ -197,7 +201,7 @@
             if( curr_type == 1 ) eff = get_effectiveness(j, target_types[0], target_types[1])
 
             if( eff != 1.0) {
-                createLine(center_circle,document.getElementById(typenames[j]),eff);
+                createLine(center_circle,document.getElementById(typenames[j]),eff,32.0);
             }
         }
 
@@ -223,54 +227,55 @@
 <text transform="matrix(1 0 0 1 130 90)"  font-family="&#39;Helvetica&#39;" font-size="18">Not Very Effective (1/4)</text>
 <text transform="matrix(1 0 0 1 130 121)" font-family="&#39;Helvetica&#39;" font-size="18">No Effect</text>
 
-<text transform="matrix(1 0 0 1 130 765)" font-family="&#39;Helvetica&#39;" font-size="18">Inner circle represents a defending Pokemon</text>
-<text transform="matrix(1 0 0 1 130 790)" font-family="&#39;Helvetica&#39;" font-size="18">Each outer circle is an attacking type</text>
-<text transform="matrix(1 0 0 1 130 815)" font-family="&#39;Helvetica&#39;" font-size="18">Click a type to set the type of the defending Pokemon (click another to add a second type)</text>
+<text transform="matrix(1 0 0 1 130 785)" font-family="&#39;Helvetica&#39;" font-size="18">Inner circle represents a defending Pokemon</text>
+<text transform="matrix(1 0 0 1 130 810)" font-family="&#39;Helvetica&#39;" font-size="18">Each outer circle is an attacking type</text>
+<text transform="matrix(1 0 0 1 130 835)" font-family="&#39;Helvetica&#39;" font-size="18">Click a type to set the type of the defending Pokemon (click another to add a second type)</text>
 
 <line id="template" stroke-opacity="0.0" x1="0" y1="0" x2="100" y2="100" stroke="blue" stroke-width="4"></line>
 
-<circle id="FLYING"   onclick="showedges(evt)" fill="#A890F0" cx="377.632" cy="692.244" r="20" style="cursor:pointer;"><title>Flying</title></circle>
-<circle id="GROUND"   onclick="showedges(evt)" fill="#E0C068" cx="284.093" cy="638.240" r="20" style="cursor:pointer;"><title>Ground</title></circle>
-<circle id="POISON"   onclick="showedges(evt)" fill="#A040A0" cx="214.666" cy="555.500" r="20" style="cursor:pointer;"><title>Poison</title></circle>
-<circle id="FIGHTING" onclick="showedges(evt)" fill="#C03028" cx="177.725" cy="454.005" r="20" style="cursor:pointer;"><title>Fighting</title></circle>
-<circle id="ICE"      onclick="showedges(evt)" fill="#98D8D8" cx="177.725" cy="345.995" r="20" style="cursor:pointer;"><title>Ice</title></circle>
-<circle id="GRASS"    onclick="showedges(evt)" fill="#78C850" cx="214.666" cy="244.500" r="20" style="cursor:pointer;"><title>Grass</title></circle>
-<circle id="ELECTRIC" onclick="showedges(evt)" fill="#F8D030" cx="284.093" cy="161.760" r="20" style="cursor:pointer;"><title>Electric</title></circle>
-<circle id="WATER"    onclick="showedges(evt)" fill="#6890F0" cx="377.632" cy="107.756" r="20" style="cursor:pointer;"><title>Water</title></circle>
-<circle id="FIRE"     onclick="showedges(evt)" fill="#F08030" cx="484.000" cy="89.000"  r="20" style="cursor:pointer;"><title>Fire</title></circle>
-<circle id="NORMAL"   onclick="showedges(evt)" fill="#A8A878" cx="590.368" cy="107.756" r="20" style="cursor:pointer;"><title>Normal</title></circle>
-<circle id="STEEL"    onclick="showedges(evt)" fill="#B8B8D0" cx="683.907" cy="161.760" r="20" style="cursor:pointer;"><title>Steel</title></circle>
-<circle id="DARK"     onclick="showedges(evt)" fill="#705848" cx="753.334" cy="244.500" r="20" style="cursor:pointer;"><title>Dark</title></circle>
-<circle id="DRAGON"   onclick="showedges(evt)" fill="#7038F8" cx="790.275" cy="345.995" r="20" style="cursor:pointer;"><title>Dragon</title></circle>
-<circle id="GHOST"    onclick="showedges(evt)" fill="#705898" cx="790.275" cy="454.005" r="20" style="cursor:pointer;"><title>Ghost</title></circle>
-<circle id="ROCK"     onclick="showedges(evt)" fill="#B8A038" cx="753.334" cy="555.500" r="20" style="cursor:pointer;"><title>Rock</title></circle>
-<circle id="BUG"      onclick="showedges(evt)" fill="#A8B820" cx="683.907" cy="638.240" r="20" style="cursor:pointer;"><title>Bug</title></circle>
-<circle id="PSYCHIC"  onclick="showedges(evt)" fill="#F85888" cx="590.368" cy="692.244" r="20" style="cursor:pointer;"><title>Psychic</title></circle>
-<circle id="FAIRY"    onclick="showedges(evt)" fill="#EE99AC" cx="484.000" cy="711.000" r="20" style="cursor:pointer;"><title>Fairy</title></circle>
+<!--
+<circle id="FLYING"   onclick="showedges(evt)" fill="#A890F0" cx="377.632" cy="692.244" r="32" style="cursor:pointer;"><title>Flying</title></circle>
+<circle id="GROUND"   onclick="showedges(evt)" fill="#E0C068" cx="284.093" cy="638.240" r="32" style="cursor:pointer;"><title>Ground</title></circle>
+<circle id="POISON"   onclick="showedges(evt)" fill="#A040A0" cx="214.666" cy="555.500" r="32" style="cursor:pointer;"><title>Poison</title></circle>
+<circle id="FIGHTING" onclick="showedges(evt)" fill="#C03028" cx="177.725" cy="454.005" r="32" style="cursor:pointer;"><title>Fighting</title></circle>
+<circle id="ICE"      onclick="showedges(evt)" fill="#98D8D8" cx="177.725" cy="345.995" r="32" style="cursor:pointer;"><title>Ice</title></circle>
+<circle id="GRASS"    onclick="showedges(evt)" fill="#78C850" cx="214.666" cy="244.500" r="32" style="cursor:pointer;"><title>Grass</title></circle>
+<circle id="ELECTRIC" onclick="showedges(evt)" fill="#F8D030" cx="284.093" cy="161.760" r="32" style="cursor:pointer;"><title>Electric</title></circle>
+<circle id="WATER"    onclick="showedges(evt)" fill="#6890F0" cx="377.632" cy="107.756" r="32" style="cursor:pointer;"><title>Water</title></circle>
+<circle id="FIRE"     onclick="showedges(evt)" fill="#F08030" cx="484.000" cy="89.000"  r="32" style="cursor:pointer;"><title>Fire</title></circle>
+<circle id="NORMAL"   onclick="showedges(evt)" fill="#A8A878" cx="590.368" cy="107.756" r="32" style="cursor:pointer;"><title>Normal</title></circle>
+<circle id="STEEL"    onclick="showedges(evt)" fill="#B8B8D0" cx="683.907" cy="161.760" r="32" style="cursor:pointer;"><title>Steel</title></circle>
+<circle id="DARK"     onclick="showedges(evt)" fill="#705848" cx="753.334" cy="244.500" r="32" style="cursor:pointer;"><title>Dark</title></circle>
+<circle id="DRAGON"   onclick="showedges(evt)" fill="#7038F8" cx="790.275" cy="345.995" r="32" style="cursor:pointer;"><title>Dragon</title></circle>
+<circle id="GHOST"    onclick="showedges(evt)" fill="#705898" cx="790.275" cy="454.005" r="32" style="cursor:pointer;"><title>Ghost</title></circle>
+<circle id="ROCK"     onclick="showedges(evt)" fill="#B8A038" cx="753.334" cy="555.500" r="32" style="cursor:pointer;"><title>Rock</title></circle>
+<circle id="BUG"      onclick="showedges(evt)" fill="#A8B820" cx="683.907" cy="638.240" r="32" style="cursor:pointer;"><title>Bug</title></circle>
+<circle id="PSYCHIC"  onclick="showedges(evt)" fill="#F85888" cx="590.368" cy="692.244" r="32" style="cursor:pointer;"><title>Psychic</title></circle>
+<circle id="FAIRY"    onclick="showedges(evt)" fill="#EE99AC" cx="484.000" cy="711.000" r="32" style="cursor:pointer;"><title>Fairy</title></circle> -->
 
-<!-- <circle id="DEFENDING" fill="#000" cx="484.000" cy="400.000" r="40"></circle> -->
+<image id="FLYING"   onclick="showedges(evt)" fill="#8fa8dd" href="images/Flying_icon_SwSh.png" x="361.632", y="676.244" width="64" height="64" style="cursor:pointer;"><title>Flying</title></image>
+<image id="GROUND"   onclick="showedges(evt)" fill="#d97746" href="images/Ground_icon_SwSh.png" x="268.093", y="622.24"  width="64" height="64" style="cursor:pointer;"><title>Ground</title></image>
+<image id="POISON"   onclick="showedges(evt)" fill="#ab6ac8" href="images/Poison_icon_SwSh.png" x="198.666", y="539.5"   width="64" height="64" style="cursor:pointer;"><title>Poison</title></image>
+<image id="FIGHTING" onclick="showedges(evt)" fill="#ce4069" href="images/Fighting_icon_SwSh.png" x="161.725", y="438.005" width="64" height="64" style="cursor:pointer;"><title>Fighting</title></image>
+<image id="ICE"      onclick="showedges(evt)" fill="#74cec0" href="images/Ice_icon_SwSh.png" x="161.725", y="329.995" width="64" height="64" style="cursor:pointer;"><title>Ice</title></image>
+<image id="GRASS"    onclick="showedges(evt)" fill="#63bb5b" href="images/Grass_icon_SwSh.png" x="198.666", y="228.5"   width="64" height="64" style="cursor:pointer;"><title>Grass</title></image>
+<image id="ELECTRIC" onclick="showedges(evt)" fill="#f3d23b" href="images/Electric_icon_SwSh.png" x="268.093", y="145.76"  width="64" height="64" style="cursor:pointer;"><title>Electric</title></image>
+<image id="WATER"    onclick="showedges(evt)" fill="#4d90d5" href="images/Water_icon_SwSh.png" x="361.632", y="91.756"  width="64" height="64" style="cursor:pointer;"><title>Water</title></image>
+<image id="FIRE"     onclick="showedges(evt)" fill="#ff9c54" href="images/Fire_icon_SwSh.png" x="468.0",   y="73.0"    width="64" height="64" style="cursor:pointer;"><title>Fire</title></image>
+<image id="NORMAL"   onclick="showedges(evt)" fill="#9099a1" href="images/Normal_icon_SwSh.png" x="574.368", y="91.756"  width="64" height="64" style="cursor:pointer;"><title>Normal</title></image>
+<image id="STEEL"    onclick="showedges(evt)" fill="#5a8ea1" href="images/Steel_icon_SwSh.png" x="667.907", y="145.76"  width="64" height="64" style="cursor:pointer;"><title>Steel</title></image>
+<image id="DARK"     onclick="showedges(evt)" fill="#5a5366" href="images/Dark_icon_SwSh.png" x="737.334", y="228.5"   width="64" height="64" style="cursor:pointer;"><title>Dark</title></image>
+<image id="DRAGON"   onclick="showedges(evt)" fill="#0a6dc4" href="images/Dragon_icon_SwSh.png" x="774.275", y="329.995" width="64" height="64" style="cursor:pointer;"><title>Dragon</title></image>
+<image id="GHOST"    onclick="showedges(evt)" fill="#5269ac" href="images/Ghost_icon_SwSh.png" x="774.275", y="438.005" width="64" height="64" style="cursor:pointer;"><title>Ghost</title></image>
+<image id="ROCK"     onclick="showedges(evt)" fill="#c7b78b" href="images/Rock_icon_SwSh.png" x="737.334", y="539.5"   width="64" height="64" style="cursor:pointer;"><title>Rock</title></image>
+<image id="BUG"      onclick="showedges(evt)" fill="#90c12c" href="images/Bug_icon_SwSh.png" x="667.907", y="622.24"  width="64" height="64" style="cursor:pointer;"><title>Bug</title></image>
+<image id="PSYCHIC"  onclick="showedges(evt)" fill="#f97176" href="images/Psychic_icon_SwSh.png" x="574.368", y="676.244" width="64" height="64" style="cursor:pointer;"><title>Psychic</title></image>
+<image id="FAIRY"    onclick="showedges(evt)" fill="#ec8fe6" href="images/Fairy_icon_SwSh.png" x="468.0",   y="695.0"   width="64" height="64" style="cursor:pointer;"><title>Fairy</title></image> -->
 
 <circle id="DEFENDING" fill="#000" cx="484.000" cy="400.000" r="40"><title></title></circle>
 
 <path id="SECONDARY" d=""><title></title></path>
 
-<!-- <text transform="matrix(1 0 0 1 140.2578 227.2168)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">NORMAL</text>
-<text transform="matrix(1 0 0 1 107.2573 375.1504)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">FIRE</text>
-<text transform="matrix(1 0 0 1 99.2573 489.7168)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">WATER</text>
-<text transform="matrix(1 0 0 1 159.5347 630.4336)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">ELECTRIC</text>
-<text transform="matrix(1 0 0 1 292.5503 710)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">GRASS</text>
-<text transform="matrix(1 0 0 1 413.5 751)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">ICE</text>
-<text transform="matrix(1 0 0 1 506.6816 751.5)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">FIGHTING</text>
-<text transform="matrix(1 0 0 1 668.0762 698.7168)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">POISON</text>
-<text transform="matrix(1 0 0 1 766.3145 594.2168)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">GROUND</text>
-<text transform="matrix(1 0 0 1 820.3301 492.2173)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">FLYING</text>
-<text transform="matrix(1 0 0 1 826.791 379.6504)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">PSYCHIC</text>
-<text transform="matrix(1 0 0 1 793.7617 250.2168)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">BUG</text>
-<text transform="matrix(1 0 0 1 719.0605 147)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">ROCK</text>
-<text transform="matrix(1 0 0 1 572.5 77.4336)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">GHOST</text>
-<text transform="matrix(1 0 0 1 452.5 55)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">DRAGON</text>
-<text transform="matrix(1 0 0 1 343.5 74.2168)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">DARK</text>
-<text transform="matrix(1 0 0 1 236.0659 134.7168)" font-family="&#39;MyriadPro-Regular&#39;" font-size="18">STEEL</text> -->
 </svg>
 
 </body>
