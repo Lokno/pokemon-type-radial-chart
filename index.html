@@ -98,19 +98,24 @@
         tempNode.setAttribute("stroke-opacity", '1.0');
         if( t == 4.0 ) {
             tempNode.setAttribute("stroke", 'lightgreen');
+            tempNode.removeAttribute("stroke-dasharray");
             thickness *= 2
         }
         else if( t == 2.0 ) {
             tempNode.setAttribute("stroke", 'darkgreen');
+            tempNode.removeAttribute("stroke-dasharray");
         }
         else if( t == 0.0 ) {
-            tempNode.setAttribute("stroke", 'black');
+            tempNode.setAttribute("stroke", 'grey');
+            tempNode.removeAttribute("stroke-dasharray");
         }   
         else if( t == 0.5 ) {
             tempNode.setAttribute("stroke", 'red');
+            tempNode.removeAttribute("stroke-dasharray");
         }           
         else { // t == 0.25
             tempNode.setAttribute("stroke", 'darkred');
+            tempNode.setAttribute("stroke-dasharray", '16 4');
             thickness *= 0.5
         }
 
