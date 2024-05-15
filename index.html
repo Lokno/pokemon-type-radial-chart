@@ -79,6 +79,53 @@
         return ae*be;
     }
 
+    function drawAlignedCross(x1, y1, x2, y2, crossSize, crossColor) {
+        // Calculate the midpoint
+        const midX = (parseInt(x1) + parseInt(x2)) / 2;
+        const midY = (parseInt(y1) + parseInt(y2)) / 2;
+
+        // Calculate the angle of the line
+        const angle = Math.atan2(y2 - y1, x2 - x1) + 0.785398;
+
+        // Calculate the offset for the cross lines
+        const offsetX = crossSize * Math.cos(angle);
+        const offsetY = crossSize * Math.sin(angle);
+
+        // Calculate the coordinates for the cross lines
+        const line1StartX = midX - offsetX;
+        const line1StartY = midY - offsetY;
+        const line1EndX = midX + offsetX;
+        const line1EndY = midY + offsetY;
+
+        const line2StartX = midX + offsetY;
+        const line2StartY = midY - offsetX;
+        const line2EndX = midX - offsetY;
+        const line2EndY = midY + offsetX;
+
+        // Create the SVG lines
+        const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line1.setAttribute('x1', line1StartX);
+        line1.setAttribute('y1', line1StartY);
+        line1.setAttribute('x2', line1EndX);
+        line1.setAttribute('y2', line1EndY);
+        line1.setAttribute('stroke', crossColor);
+        line1.setAttribute("stroke-width", 5);
+
+        const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line2.setAttribute('x1', line2StartX);
+        line2.setAttribute('y1', line2StartY);
+        line2.setAttribute('x2', line2EndX);
+        line2.setAttribute('y2', line2EndY);
+        line2.setAttribute('stroke', crossColor);
+        line2.setAttribute("stroke-width", 5);
+
+        lines.push(line1)
+        lines.push(line2)
+
+        svghead.insertBefore(line1, svghead.firstChild );
+        svghead.insertBefore(line2, svghead.firstChild );
+    }
+
     function createLine(a,b,t,r) {
         var ax = a.getAttribute('cx');
         var ay = a.getAttribute('cy');
@@ -108,6 +155,7 @@
         else if( t == 0.0 ) {
             tempNode.setAttribute("stroke", 'grey');
             tempNode.removeAttribute("stroke-dasharray");
+            drawAlignedCross(ax,ay,bx,by,20,'grey',thickness)
         }   
         else if( t == 0.5 ) {
             tempNode.setAttribute("stroke", 'darkred');
