@@ -29,6 +29,11 @@
 
         // effectiveness table
         //
+        // I - Ineffective
+        // S - Super Effective
+        // N - Neural
+        // 0 - No Effect
+        //
         //         Defense
         //            | 
         //            |
@@ -47,9 +52,9 @@
         types[10] = ['N','N','N','N','N','N','S','S','N','N','I','N','N','N','N','0','I','N']; // PSYCHIC
         types[11] = ['N','I','N','N','S','N','I','I','N','I','S','N','N','I','N','S','I','I']; // BUG
         types[12] = ['N','S','N','N','N','S','I','N','I','S','N','S','N','N','N','N','I','N']; // ROCK
-        types[13] = ['0','N','N','N','N','N','N','N','N','N','S','N','N','S','N','I','I','N']; // GHOST
+        types[13] = ['0','N','N','N','N','N','N','N','N','N','S','N','N','S','N','I','N','N']; // GHOST
         types[14] = ['N','N','N','N','N','N','N','N','N','N','N','N','N','N','S','N','I','0']; // DRAGON
-        types[15] = ['N','N','N','N','N','N','I','N','N','N','S','N','N','S','N','I','I','I']; // DARK
+        types[15] = ['N','N','N','N','N','N','I','N','N','N','S','N','N','S','N','I','N','I']; // DARK
         types[16] = ['N','I','I','I','N','S','N','N','N','N','N','N','S','N','N','N','I','S']; // STEEL
         types[17] = ['N','I','N','N','N','N','S','I','N','N','N','N','N','N','S','S','I','N']; // FAIRY
 
@@ -333,8 +338,8 @@
 <image id="POISON"   onclick="showedges(evt)" href="images/Poison_icon_SwSh.png"   x="131.666" y="503.500" width="64" height="64" style="cursor:pointer;"><title>Poison</title></image>
 <image id="FIGHTING" onclick="showedges(evt)" href="images/Fighting_icon_SwSh.png" x="94.725" y="402.005" width="64" height="64" style="cursor:pointer;"><title>Fighting</title></image>
 <image id="ICE"      onclick="showedges(evt)" href="images/Ice_icon_SwSh.png"      x="94.725" y="293.995" width="64" height="64" style="cursor:pointer;"><title>Ice</title></image>
-<image id="ELECTRIC" onclick="showedges(evt)" href="images/Electric_icon_SwSh.png" x="131.666" y="192.500" width="64" height="64" style="cursor:pointer;"><title>Grass</title></image>
-<image id="GRASS"    onclick="showedges(evt)" href="images/Grass_icon_SwSh.png"    x="201.093" y="109.760" width="64" height="64" style="cursor:pointer;"><title>Electric</title></image>
+<image id="ELECTRIC" onclick="showedges(evt)" href="images/Electric_icon_SwSh.png" x="131.666" y="192.500" width="64" height="64" style="cursor:pointer;"><title>Electric</title></image>
+<image id="GRASS"    onclick="showedges(evt)" href="images/Grass_icon_SwSh.png"    x="201.093" y="109.760" width="64" height="64" style="cursor:pointer;"><title>Grass</title></image>
 <image id="WATER"    onclick="showedges(evt)" href="images/Water_icon_SwSh.png"    x="294.632" y="55.756" width="64" height="64" style="cursor:pointer;"><title>Water</title></image>
 <image id="FIRE"     onclick="showedges(evt)" href="images/Fire_icon_SwSh.png"     x="401.000" y="37.000" width="64" height="64" style="cursor:pointer;"><title>Fire</title></image>
 <image id="NORMAL"   onclick="showedges(evt)" href="images/Normal_icon_SwSh.png"   x="507.368" y="55.756" width="64" height="64" style="cursor:pointer;"><title>Normal</title></image>
